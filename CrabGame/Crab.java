@@ -20,6 +20,11 @@ public class Crab extends Actor
         // image1을 crab.png로 설정
         // image2를 crab2.png로 설정
         // 초기 wormEaten은 0
+        image1 = new GreenfootImage("crab.png");
+        image2 = new GreenfootImage("crab2.png");
+        int wormEaten = 0;
+       
+        
     }
     
     /**
@@ -42,8 +47,8 @@ public class Crab extends Actor
             turn(10);
             
         // 무작위로 움직임
-        if( Greenfoot.getRandomNumber(100) < 10) 
-            turn(Greenfoot.getRandomNumber(90) - 45);
+        //if( Greenfoot.getRandomNumber(100) < 10) 
+        //    turn(Greenfoot.getRandomNumber(90) - 45);
         
         // 한번에 5씩 움직임
         move(5);
@@ -56,7 +61,7 @@ public class Crab extends Actor
     {
         // 이미지를 번갈아가며 바꿈
         if (getImage() == image1) 
-        {
+        { 
             setImage(image2);
         }
         else
@@ -73,6 +78,13 @@ public class Crab extends Actor
     {
         // <- 방향키를 입력받으면 -4 만큼 회전
         // -> 방향키를 입력받으면 4 만큼 회전
+        if(Greenfoot.isKeyDown("left")){
+            turn(-4);
+        }
+        
+        if(Greenfoot.isKeyDown("right")){
+            turn(4);
+        }
     }
     
     /**
@@ -82,13 +94,15 @@ public class Crab extends Actor
      */
     public void lookForWorm()
     {
-        // Worm에 닿은 경우
-        // Worm을 제거
-        // slurp.wav 음악 재생
-        // wormsEaten 증가
-        // 먹은 Worm의 수가 8인 경우
-        // fanfare.wav 음악 재생
-        // Congratulation! 문구 표시
-        // Greenfoot.stop();
+        if(isTouching(Worm.class)){ // Worm에 닿은 경우
+            removeTouching(Worm.class); // Worm을 제거
+            Greenfoot.playSound("slurp.wav"); // slurp.wav 음악 재생
+            wormsEaten += 1; // wormsEaten 증가
+            if(wormsEaten == 8) { // 먹은 Worm의 수가 8인 경우
+                Greenfoot.playSound("fanfare.wav"); // fanfare.wav 음악 재생
+                getWorld().showText("Congratulation!", 280, 280); // Congratulation! 문구 표시
+                Greenfoot.stop(); // Greenfoot.stop();
+            }
+        }
     }  
 }

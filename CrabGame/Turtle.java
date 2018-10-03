@@ -22,9 +22,18 @@ public class Turtle extends Lobster implements Freezable
     {
         // Add your action code here.
         // counter가 0이 되면 Lobster와 동일하게 움직임
+        if(counter > 0){
+            counter--;
+        }
+        else if(counter == 0) {
+            super.act();
+        }
+        
     }
     
     public void freeze(int count) {
         // counter를 count로 설정
+        counter = count;
+        
     }
 }
